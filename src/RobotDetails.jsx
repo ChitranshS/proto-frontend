@@ -90,7 +90,7 @@ const RobotDetails = ({ robotName }) => {
       <Card w="100%" mb={6} boxShadow="lg">
         <ScaleFade initialScale={0.9} in={true}>
           <Image 
-            src={`${robotName}.jpg`}  // Dynamic image URL
+            src={`./assets/${robotName}.jpg`}  // Dynamic image URL
             alt={robotData.robotData.name}
             objectFit="cover"
             h="70vh"
