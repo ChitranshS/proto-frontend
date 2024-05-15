@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { 
-  Box, 
-  Container, 
-  Heading, 
-  SimpleGrid, 
-  Card, 
-  CardBody, 
-  Image, 
-  Spinner, 
-  Alert, 
-  AlertIcon, 
-  Text, 
+import {
+  Box,
+  Container,
+  Heading,
+  SimpleGrid,
+  Card,
+  CardBody,
+  Image,
+  Spinner,
+  Alert,
+  AlertIcon,
+  Text,
   Flex,
   useColorModeValue,
   ScaleFade,
@@ -23,25 +23,28 @@ import './RobotDetails.css';  // Assuming you will add some global styles here
 const RobotDetails = ({ robotName }) => {
   const [robotData, setRobotData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const [error, setError] = useState(null);
   const bgColor = useColorModeValue('gray.100', 'gray.700');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true); // Ensure loading is true at the start of data fetch
+        setImageLoaded(false); // Reset image loading state
         const response = await axios.get(`https://proto-backend.vercel.app/robots/name/${robotName}`);
         setRobotData(response.data);
       } catch (err) {
         setError(err);
       } finally {
-        setLoading(false);
+        setLoading(false); // Set loading to false after data fetch
       }
     };
 
     fetchData();
   }, [robotName]);
 
-  if (loading) return <Spinner />;
+  if (loading || !imageLoaded) return <Spinner />;
   if (error) return (
     <Alert status="error">
       <AlertIcon />
@@ -96,6 +99,7 @@ const RobotDetails = ({ robotName }) => {
             h="70vh"
             w="100%"
             borderRadius="md"
+            onLoad={() => setImageLoaded(true)}  // Set imageLoaded to true when image is loaded
           />
         </ScaleFade>
         <CardBody>
