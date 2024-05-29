@@ -117,6 +117,7 @@ const App = () => {
         isClosable: true,
       });
     }
+    window.location.reload()
   };
 
   if (loading) {
