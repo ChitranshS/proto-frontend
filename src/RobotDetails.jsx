@@ -22,24 +22,50 @@ import './RobotDetails.css';
 
 const RobotDetails = ({ robotName }) => {
   const [robotData, setRobotData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const bgColor = useColorModeValue('gray.100', 'gray.700');
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`https://proto-backend.vercel.app/robots/name/${robotName}`);
-        setRobotData(response.data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (robotName) {
+      const fetchData = async () => {
+        setLoading(true);
+        try {
+          const response = await axios.get(`https://proto-backend.vercel.app/robots/name/${robotName}`);
+          setRobotData(response.data);
+        } catch (err) {
+          setError(err);
+        } finally {
+          setLoading(false);
+        }
+      };
 
-    fetchData();
+      fetchData();
+    }
   }, [robotName]);
+
+  if (!robotName) {
+    return (
+      <Container centerContent p={4} bg={bgColor} minH="100vh" maxW="container.lg">
+        <Card w="100%" mb={6} boxShadow="lg">
+          <CardBody>
+            <Heading size="lg" mb={2}>
+              Welcome to Robot Details
+            </Heading>
+            <Text color="gray.500">
+              Please select a robot model from the left sidebar to view its details.
+            </Text>
+          </CardBody>
+          <Image 
+            src="welcome.jpg" // Dynamic image URL
+            alt= 'Robot Image'
+            objectFit="cover"
+            borderRadius="md"
+          />
+        </Card>
+      </Container>
+    );
+  }
 
   if (loading) return <Spinner />;
   if (error) return (
@@ -91,37 +117,41 @@ const RobotDetails = ({ robotName }) => {
         <ScaleFade initialScale={0.9} in={true}>
           <Image 
             src={`${robotName}.jpg`}  // Dynamic image URL
-            alt={robotData.robotData.name}
+            alt={robotData?.robotData?.name || 'Robot Image'}
             objectFit="cover"
-            h="70vh"
+            h="40vh"  // Adjust height as needed
             w="100%"
             borderRadius="md"
           />
         </ScaleFade>
-        <CardBody>
-          <Heading size="lg" mb={2}>
-            {robotData.robotData.name}
-          </Heading>
-          <Text color="gray.500">
-            ID: {robotData.robotData.Id}
-          </Text>
-        </CardBody>
+        {robotData && (
+          <CardBody>
+            <Heading size="lg" mb={2}>
+              {robotData.robotData.name}
+            </Heading>
+            <Text color="gray.500">
+              ID: {robotData.robotData.Id}
+            </Text>
+          </CardBody>
+        )}
       </Card>
 
-      <Center w="100%">
-        <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={4}>
-          {renderSection('Manipulators', robotData.manipulators)}
-          {renderSection('Control Modules', robotData.controlModules)}
-          {renderSection('Floors', robotData.floors)}
-          {renderSection('Basics', robotData.basics)}
-          {renderSection('Controllers', robotData.controllers)}
-          {renderSection('Additional Options', robotData.additionals)}
-          {renderSection('Applications', robotData.applications)}
-          {renderSection('Robotwares', robotData.robotwares)}
-        </SimpleGrid>
-      </Center>
+      {robotData && (
+        <Center w="100%">
+          <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={4}>
+            {renderSection('Manipulators', robotData.manipulators)}
+            {renderSection('Control Modules', robotData.controlModules)}
+            {renderSection('Floors', robotData.floors)}
+            {renderSection('Basics', robotData.basics)}
+            {renderSection('Controllers', robotData.controllers)}
+            {renderSection('Additional Options', robotData.additionals)}
+            {renderSection('Applications', robotData.applications)}
+            {renderSection('Robotwares', robotData.robotwares)}
+          </SimpleGrid>
+        </Center>
+      )}
     </Container>
   );
 };
 
-export default RobotDetails;  
+export default RobotDetails;
