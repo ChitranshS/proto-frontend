@@ -167,6 +167,12 @@ const App = () => {
             <Box>
               <Heading size="lg" mb={4}>Welcome to Robot Details</Heading>
               <Text>Please select a robot model from the left sidebar to view its details.</Text>
+              <Image 
+            src='welcome.jpg'  // Dynamic image URL
+            alt='Robot Image'
+            objectFit="cover"
+            borderRadius="md"
+          />
             </Box>
           )}
         </Box>
