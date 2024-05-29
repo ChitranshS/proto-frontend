@@ -146,7 +146,7 @@ const App = () => {
         <Box w="80%" p={5}>
           {showAddRobotForm ? (
             <Box>
-              <Heading size="lg" mb={4}>Add/Edit Robot Details</Heading>
+              <Heading size="lg" mb={4}>Add Robot Details</Heading>
               <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={4}>
                 {Object.keys(formData).map((category) => (
                   <RobotForm 
