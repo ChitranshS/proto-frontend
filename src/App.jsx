@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChakraProvider, Box, Heading, Button, VStack, Flex, SimpleGrid, Text, useToast, Spinner } from '@chakra-ui/react';
+import { ChakraProvider, Box, Heading, Button,Image, VStack, Flex, SimpleGrid, Text, useToast, Spinner } from '@chakra-ui/react';
 import axios from 'axios';
 import RobotDetails from './RobotDetails';
 import RobotForm from './RobotForm'; // Ensure the path is correct
@@ -167,10 +167,12 @@ const App = () => {
             <Box>
               <Heading size="lg" mb={4}>Welcome to Robot Details</Heading>
               <Text>Please select a robot model from the left sidebar to view its details.</Text>
+              <br></br>
               <Image 
             src='welcome.jpg'  // Dynamic image URL
             alt='Robot Image'
             objectFit="cover"
+            h ="80vh"
             borderRadius="md"
           />
             </Box>
