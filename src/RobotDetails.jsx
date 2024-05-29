@@ -95,10 +95,10 @@ const RobotDetails = ({ robotName }) => {
             <Box key={item._id} mb={2}>
               <Badge colorScheme="teal" mb={1}>{item.name}</Badge>
               <Text fontWeight="bold">
-                Name: {item.name}
+                Product Name: {item.name}
               </Text>
               <Text>
-                ID: {item.Id}
+                Product ID: {item.Id}
               </Text>
               {renderProperties(item.properties)}
               {renderProperties(item.features)}
